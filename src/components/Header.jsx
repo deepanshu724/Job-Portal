@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import {
   SignedIn,
   SignedOut,
@@ -12,12 +12,26 @@ import { BriefcaseBusiness, Heart, PenBox } from "lucide-react";
 const Header = () => {
   const [search, setSearch] = useSearchParams();
   const { user } = useUser();
+  const navigate = useNavigate();
 
   // Function to handle direct redirection to custom sign-in URL
   const handleSignUp = () => {
     // Redirect to the specified Sign Up URL
     window.location.href = 'https://arriving-bonefish-42.accounts.dev/sign-in?sign_up_fallback_redirect_url=http%3A%2F%2Flocalhost%3A5177%2Fonboarding';
   };
+
+  // Function to redirect user to the appropriate job page after login
+  const redirectToJobs = () => {
+    if (user) {
+      // Direct users to My Jobs or Saved Jobs based on their role
+      navigate("/my-jobs"); // Always redirect to My Jobs
+    }
+  };
+
+  useEffect(() => {
+    // Call redirectToJobs when user data changes
+    redirectToJobs();
+  }, [user, navigate]);
 
   return (
     <>
@@ -52,14 +66,14 @@ const Header = () => {
                 <UserButton.Link
                   label="My Jobs"
                   labelIcon={<BriefcaseBusiness size={15} />}
-                  href="/my-jobs"
+                  href="/my-jobs" // Link to My Jobs
                 />
                 <UserButton.Link
                   label="Saved Jobs"
                   labelIcon={<Heart size={15} />}
-                  href="/saved-jobs"
+                  href="/saved-jobs" // Link to Saved Jobs
                 />
-                <UserButton.Action label="manageAccount" />
+                <UserButton.Action label="Manage Account" />
               </UserButton.MenuItems>
             </UserButton>
           </SignedIn>
