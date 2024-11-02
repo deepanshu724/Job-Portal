@@ -28,7 +28,7 @@ const Header = () => {
 
       <div className='flex gap-8'>
         <SignedOut>
-          <Button variant="outline" onClick={handleSignUp}>Sign Up</Button>
+          <Button variant="outline" onClick={handleSignUp}>Login</Button>
         </SignedOut>
 
         {user?.unsafeMetadata?.role === "recruiter" && (
