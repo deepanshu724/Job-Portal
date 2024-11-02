@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClerkProvider } from '@clerk/clerk-react';
+import "./App.css";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AppLayout from './layout/AppLayout';
 import LandingPage from './pages/LandingPage';
@@ -11,10 +11,7 @@ import Savedjob from './pages/saved-jobs';
 import Myjobs from './pages/my-jobs';
 import { ThemeProvider } from './components/Themeprovider';
 import Protectedroute from './components/protectedroute';
-import NotFound from './pages/NotFound';
-
-// Add Clerk's frontend API URL here if you haven't already
-const clerkFrontendApi = import.meta.env.VITE_CLERK_FRONTEND_API;
+import NotFound from './pages/NotFound'; // Import your NotFound component
 
 const router = createBrowserRouter([
   {
@@ -82,11 +79,9 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <ClerkProvider frontendApi={clerkFrontendApi}>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </ClerkProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <RouterProvider router={router} />
+    </ThemeProvider>
   );
 }
 
