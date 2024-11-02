@@ -10,7 +10,7 @@ import Postjob from './pages/post-job';
 import Savedjob from './pages/saved-jobs';
 import Myjobs from './pages/my-jobs';
 import { ThemeProvider } from './components/Themeprovider';
-import Protectedroute from './components/ProtectedRoute';
+import Protectedroute from './components/protectedroute';
 import NotFound from './pages/NotFound'; // Import your NotFound component
 
 const router = createBrowserRouter([
