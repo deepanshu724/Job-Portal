@@ -1,30 +1,23 @@
-import { useUser } from '@clerk/clerk-react';
-import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+/* eslint-disable react/prop-types */
+import { Navigate, useLocation } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
 
-const Protectedroute = ({ children }) => {
-    const { isSignedIn, isLoaded, user } = useUser();
-    const { pathname } = useLocation();
+const ProtectedRoute = ({ children }) => {
+  const { isSignedIn, isLoaded, user } = useUser();
+  const { pathname } = useLocation();
 
-    console.log(pathname);
+  if (isLoaded && !isSignedIn && isSignedIn !== undefined) {
+    return <Navigate to="/?sign-in=true" />;
+  }
 
-    // Ensure user information is loaded
-    if (!isLoaded) {
-        return null; // You may want to show a loader or nothing until loaded
-    }
+  if (
+    user !== undefined &&
+    !user?.unsafeMetadata?.role &&
+    pathname !== "/onboarding"
+  )
+    return <Navigate to="/onboarding" />;
 
-    // Redirect if the user is not signed in
-    if (!isSignedIn) {
-        return <Navigate to='/?sign-in=true' />;
-    }
-
-    // Redirect to onboarding if the user doesn't have a role
-    if (!user?.unsafeMetadata?.role && pathname !== "/onboarding") {
-        return <Navigate to='/onboarding' />;
-    }
-
-    // Render the protected component
-    return children;
+  return children;
 };
 
-export default Protectedroute;
+export default ProtectedRoute;
